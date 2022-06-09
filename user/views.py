@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import  User
 from user.models import Profile
+from user.forms import UserForm
 
 
 
@@ -51,3 +52,27 @@ def user_profile(request):
     return redirect('user-profile')
 
   return render(request, 'profile.html')
+
+
+"""
+ user signup
+"""
+def signup(request):
+  if request.method == 'POST':
+    form = UserForm(request.POST)
+
+    # validate form inputs
+    if form.is_valid():
+      new_user = form.save()
+      new_user.set_password(form.cleaned_data['password1'])
+      new_user.is_active=True
+
+      new_user.save()
+
+      messages.success(request, 'Successfully registered, please login with your credentials')
+      return redirect('login')
+
+    messages.warning(request, 'Form not valid, please make sure both password matches')
+    return redirect('signup')
+
+  return render(request, 'signup.html')
