@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.contrib.auth.models import  User
-from user.models import Profile
+import requests
+from django.contrib.auth.models import User
 from user.forms import UserForm
+
+# will be using this endpoint to get latitude and longitude when user updates their home address
+API_KEY='493c254db58099a8ea029b5aed2e2b82'
+END_POINT = 'http://api.positionstack.com/v1/'
 
 
 
@@ -44,6 +48,22 @@ def user_profile(request):
     user.last_name = request.POST['last_name']
     user.profile.home_address = request.POST['home_address']
     user.profile.phone_number = request.POST['phone_number']
+
+    """
+      use home address to get the latitude and longitude  which will be used to
+      create full screen map to show location of all registered users
+    """
+    req = requests.get(f"{END_POINT}forward?access_key={API_KEY}&query={request.POST['home_address']}")
+
+    if req.status_code == 200:
+      res = req.json()
+
+      if len(res['data']) != 0:
+        user.profile.latitude = res['data'][0]['latitude']
+        user.profile.longitude = res['data'][0]['longitude']
+      else:
+        user.profile.latitude = '-'
+        user.profile.longitude = '-'
 
     user.save()
 
