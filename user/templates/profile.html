@@ -26,6 +26,10 @@
                                       <p class="card-text">Home Address: <i>{{request.user.profile.home_address}}</i></p>
                                       <p class="card-text">Phone Number: <i>{{request.user.profile.phone_number}}</i></p>
 
+                                      <p class="card-text">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_profile"><i class="fas fa-edit"></i> Edit Profile</button>
+                                      </p>
+
                                     </div>
                                   </div>
                                 </div>
@@ -34,6 +38,51 @@
                             </div>
 
                         </div>
+
+
+
+              <!-- Modal to edit user profile -->
+              <div class="modal fade" id="edit_profile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                       <form method = "POST" action="{% url 'user-profile' %}">
+						            {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{request.user.first_name}}" id="first_name">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{request.user.last_name}}" id="last_name">
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="home_address" class="form-label">Home address</label>
+                        <input type="text" class="form-control" name="home_address" value="{{request.user.profile.home_address}}" id="home_address">
+                      </div>
+
+                         <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" name="phone_number" value="{{request.user.profile.phone_number}}" id="phone_number">
+                      </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
 
                     </div>
                 </main>

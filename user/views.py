@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.models import  User
+from user.models import Profile
+
 
 
 # Default page for the application
@@ -30,8 +33,21 @@ def login_index(request):
 
 """
  page where user will be redirected after login
+ user will be able to update their profile info
 """
 def user_profile(request):
   if request.method == 'POST':
-    pass
+    # update user profile
+    user = User.objects.get(pk=request.user.id)
+    user.first_name = request.POST['first_name']
+    user.last_name = request.POST['last_name']
+    user.profile.home_address = request.POST['home_address']
+    user.profile.phone_number = request.POST['phone_number']
+
+    user.save()
+
+    # redirect back to their profile
+    messages.success(request, 'Profile updated successfully')
+    return redirect('user-profile')
+
   return render(request, 'profile.html')
