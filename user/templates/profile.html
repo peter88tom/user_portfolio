@@ -1,4 +1,52 @@
-Welcome back <i>{{request.user.username}}</i>
-<p>
-  <a href="{% url 'logout' %}">Logout</a>
-</p>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<body class="sb-nav-fixed" xmlns="http://www.w3.org/1999/html">
+      {% include 'partials/topbar.html' %}
+        <div id="layoutSidenav">
+           {% include 'partials/sidebar.html' %}
+            <div id="layoutSidenav_content">
+                <main>
+                     <div class="container-fluid px-4">
+                        {% include 'partials/messages.html' %}
+                        <h3 class="mt-4">Welcome back <i/>{{request.user.username}}</i></h3>
+
+
+                        <div class="row">
+                            <div class="col-xl-12">
+
+                              <div class="card mb-3">
+                                <div class="row g-0">
+
+                                  <div class="col-md-12">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Profile Details:</h5><hr>
+                                      <p class="card-text">First Name: <i>{{request.user.first_name}}</i></p>
+                                      <p class="card-text">Last Name: <i>{{request.user.last_name}}</i></p>
+                                      <p class="card-text">Home Address: <i>{{request.user.profile.home_address}}</i></p>
+                                      <p class="card-text">Phone Number: <i>{{request.user.profile.phone_number}}</i></p>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </main>
+
+
+		{% include 'partials/footer.html' %}
+            </div>
+        </div>
+
+
+	{% block javascript %}
+
+
+	{% endblock %}
+
+	{% endblock %}
