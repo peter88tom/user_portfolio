@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 import requests
+from django.http.response import JsonResponse
+
+# models and form imports
 from django.contrib.auth.models import User
+from user.models import Profile
 from user.forms import UserForm
 
 # will be using this endpoint to get latitude and longitude when user updates their home address
@@ -96,3 +100,27 @@ def signup(request):
     return redirect('signup')
 
   return render(request, 'signup.html')
+
+
+# default page to show location of all registered users
+def map_to_show_registered_users(request):
+  return render(request, 'map.html')
+
+
+# return json response for user location
+def get_users_latitude_and_longitude(request):
+  data = []
+  locations = Profile.objects.all()
+
+  for location in locations:
+    k = {
+      'lat':location.latitude,
+      'long':location.longitude,
+      'first_name': location.user.first_name,
+      'home_address':location.home_address,
+      'phone':location.phone_number,
+    }
+
+    data.append(k)
+
+  return JsonResponse(data, safe=False)

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<body class="sb-nav-fixed" xmlns="http://www.w3.org/1999/html">
+      {% include 'partials/topbar.html' %}
+        <div id="layoutSidenav">
+           {% include 'partials/sidebar.html' %}
+            <div id="layoutSidenav_content">
+                <main>
+                     <div class="container-fluid px-4">
+
+                        <h3 class="mt-4">Welcome back <i/>{{request.user.username}}</i></h3>
+
+                        <div class="row">
+                            <div class="col-xl-12">
+
+                              <div class="card mb-3">
+                                <div class="row g-0">
+
+                                  <div class="col-md-12">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Map to show location of each registered user</h5><hr>
+
+                                      <div class="row">
+                                        <div id="mapid" style="height: 550px;"></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </main>
+
+
+		{% include 'partials/footer.html' %}
+            </div>
+        </div>
+
+
+	{% block javascript %}
+
+ <script type="text/javascript">
+
+// Initialize the view, and set coordinates
+
+var map = L.map('mapid').setView([0,0],2);
+
+var  defRadius = 20000;
+
+// Add a tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    zoomDelta: 0.25,
+    zoomSnap: 0
+
+}).addTo(map);
+
+
+
+     $.ajax({
+      url:'/user/map/get-users-location',
+      type:'GET',
+      success:function(data){
+
+         $.each(data, function(i,k){
+
+            L.circleMarker([k.lat,k.long], {
+              color: 'red',
+              fillColor: '#f03',
+              fillOpacity: 0.5,
+              interactive: true,
+            }).addTo(map).bindPopup(
+              "Name: <i>"+k.first_name+"</i><br>Address: <i>"+k.home_address+"</i><br>Phone: <i>"+k.phone+"</i>"
+               ).openPopup();
+
+         });
+
+
+      },error:function(data){
+         console.log(data);
+      }
+    });
+
+
+   </script>
+
+	{% endblock %}
+
+	{% endblock %}
