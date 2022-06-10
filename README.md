@@ -1,3 +1,5 @@
+![login](https://user-images.githubusercontent.com/3862681/173034608-9ee214f8-403a-4f0b-9383-c9f1cb855e3d.png)
+
 # How to setup the repository locally
 To get this project up and running you should start by having latest version of Python installed on your computer. Install virtual environment in your computer like this
 ```
