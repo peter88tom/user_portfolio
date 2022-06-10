@@ -118,7 +118,7 @@ def map_to_show_registered_users(request):
 def get_users_latitude_and_longitude(request):
   if request.user.is_authenticated:
     data = []
-    locations = Profile.objects.all()
+    locations = Profile.objects.all().exclude(latitude='-')
 
     for location in locations:
       k = {
