@@ -21,3 +21,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
   instance.profile.save()
+
+
+# Model to store login/logout activities
+class LoginLogoutActivities(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+  login_time = models.DateTimeField(auto_now_add=True)
+  logout_time = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return f"Name: {self.user.username}, Loggedin at: {self.login_time}, Loggedout at: {self.logout_time}"
