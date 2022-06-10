@@ -30,4 +30,4 @@ class LoginLogoutActivities(models.Model):
   logout_time = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
-    return f"Name: {self.user.username}, Loggedin at: {self.login_time}, Loggedout at: {self.logout_time}"
+    return f"User: {self.user.username}, Logged in at: {str(self.login_time)[:16]}, Logged out at: {str(self.logout_time)[:16]}"
