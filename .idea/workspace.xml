@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f54c3dc-b232-4216-af1b-b26df355b401" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/user/templates/partials/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/user/templates/partials/sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
